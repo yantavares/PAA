@@ -5,24 +5,24 @@
 
 using namespace std;
 
-typedef pair<int, int> pii;
+typedef pair<long long, long long> pii;
 typedef vector<vector<pii>> Graph;
 
 // Usando prim algorithm para encontrar o MST
 
-int primMST(const Graph &graph, int startNode)
+long long primMST(const Graph &graph, long long startNode)
 {
-    int numNodes = graph.size();
+    long long numNodes = graph.size();
     vector<bool> visited(numNodes, false);
     priority_queue<pii, vector<pii>, greater<pii>> pq;
-    int mstWeight = 0;
+    long long mstWeight = 0;
 
     pq.push(make_pair(0, startNode));
 
     while (!pq.empty())
     {
-        int u = pq.top().second;
-        int weight = pq.top().first;
+        long long u = pq.top().second;
+        long long weight = pq.top().first;
         pq.pop();
 
         if (visited[u])
@@ -33,8 +33,8 @@ int primMST(const Graph &graph, int startNode)
 
         for (const auto &neighbor : graph[u])
         {
-            int v = neighbor.first;
-            int edgeWeight = neighbor.second;
+            long long v = neighbor.first;
+            long long edgeWeight = neighbor.second;
 
             if (!visited[v])
                 pq.push(make_pair(edgeWeight, v));
@@ -46,20 +46,20 @@ int primMST(const Graph &graph, int startNode)
 
 int main()
 {
-    int N, M;
+    long long N, M;
     cin >> N >> M;
 
     Graph graph(N);
 
-    for (int i = 0; i < M; i++)
+    for (long long i = 0; i < M; i++)
     {
-        int u, v, weight;
+        long long u, v, weight;
         cin >> u >> v >> weight;
         graph[u - 1].push_back(make_pair(v - 1, weight));
         graph[v - 1].push_back(make_pair(u - 1, weight));
     }
 
-    int mstWeight = primMST(graph, 0);
+    long long mstWeight = primMST(graph, 0);
     cout << mstWeight << endl;
 
     return 0;
